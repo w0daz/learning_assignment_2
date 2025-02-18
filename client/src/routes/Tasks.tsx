@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import TaskList from "../components/TaskList";
-import { getTasks } from "../../services/apiService"; // Import the API function
+import { getTasks } from "../../services/apiService";
 
 const Tasks = () => {
   const [taskList, setTaskList] = useState<string[]>([]);
@@ -32,8 +32,8 @@ const Tasks = () => {
   };
 
   return (
-    <div>
-      <h2>Tasks</h2>
+    <div className="p-6">
+      <h2 className="text-2xl font-bold mb-4">Tasks</h2>
 
       {/* Show error alert if error exists */}
       {error && (
@@ -47,14 +47,17 @@ const Tasks = () => {
         <p>Loading...</p>
       ) : (
         <>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className="mb-4 flex gap-2">
             <input
               type="text"
               value={newTask}
               placeholder="New task"
               onChange={(e) => setNewTask(e.target.value)}
+              className="input input-bordered flex-1"
             />
-            <button type="submit">Add Task</button>
+            <button type="submit" className="btn btn-success">
+              Add Task
+            </button>
           </form>
 
           {/* Display TaskList only when not loading */}

@@ -3,9 +3,12 @@ import Navigation from "../components/Navigation";
 
 const Root = () => {
   return (
-    <div className="root-layout">
+    <div className="flex min-h-screen">
+      {/* Sidebar Navigation */}
       <Navigation />
-      <div className="content">
+
+      {/* Main Content */}
+      <div className="flex-1 p-6">
         <Outlet />
       </div>
     </div>

@@ -1,17 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
   return (
-    <nav className="sidebar">
-      <ul className="nav-list">
-        <li>
-          <Link to="/" className="nav-link">Dashboard</Link>
-        </li>
-        <li>
-          <Link to="/tasks" className="nav-link">Tasks</Link>
-        </li>
-      </ul>
-    </nav>
+    <aside className="w-1/4 bg-gray-100 p-6 shadow-md min-h-screen">
+      <h1 className="text-2xl font-bold mb-4">WhatToDoApp</h1>
+      <nav className="space-y-4">
+        <Link to="/" className="btn btn-outline btn-block">
+          Dashboard
+        </Link>
+        <Link to="/tasks" className="btn btn-primary btn-block">
+          Tasks
+        </Link>
+      </nav>
+    </aside>
   );
 };
 
