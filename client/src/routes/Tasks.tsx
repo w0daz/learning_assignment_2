@@ -11,8 +11,7 @@ const Tasks = () => {
   useEffect(() => {
     getTasks()
       .then((data) => {
-        setNewTask(data.message); // Assign API message to newTask
-        setTaskList([...taskList, data.message]);
+        setTaskList(data.tasks); // Assign API response to taskList
         setLoading(false);
       })
       .catch((err) => {
