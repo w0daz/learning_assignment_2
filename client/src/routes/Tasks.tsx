@@ -1,9 +1,10 @@
 import { useEffect, useState } from "react";
 import TaskList from "../components/TaskList";
 import { getTasks } from "../../services/apiService";
+import { TaskModel } from "../models/TaskModels";
 
 const Tasks = () => {
-  const [taskList, setTaskList] = useState<string[]>([]);
+  const [taskList, setTaskList] = useState<TaskModel[]>([]);
   const [newTask, setNewTask] = useState<string>("");
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
@@ -23,26 +24,33 @@ const Tasks = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!newTask) return;
-    setTaskList([...taskList, newTask]);
+    const newTaskObject: TaskModel = {
+      taskId: Date.now(), // Temporary ID until backend assigns one
+      name: newTask,
+      content: "", // Empty content for now
+      startDate: null,
+      endDate: null,
+      createdAt: new Date().toISOString(),
+      updatedAt: new Date().toISOString(),
+    };
+    setTaskList([...taskList, newTaskObject]);
     setNewTask("");
   };
 
-  const handleDeleteTask = (task: string) => {
-    setTaskList(taskList.filter((t) => t !== task));
+  const handleDeleteTask = (taskId: number) => {
+    setTaskList(taskList.filter((task) => task.taskId !== taskId));
   };
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-4">Tasks</h2>
 
-      {/* Show error alert if error exists */}
       {error && (
         <div className="alert alert-error">
           <span>{error}</span>
         </div>
       )}
 
-      {/* Show loading text if tasks are still loading */}
       {loading ? (
         <p>Loading...</p>
       ) : (
@@ -60,7 +68,6 @@ const Tasks = () => {
             </button>
           </form>
 
-          {/* Display TaskList only when not loading */}
           <TaskList taskList={taskList} onDeleteTask={handleDeleteTask} />
         </>
       )}
