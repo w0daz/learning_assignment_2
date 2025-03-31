@@ -1,5 +1,6 @@
 import { Sequelize } from "sequelize";
 import dotenv from "dotenv";
+import Task from "../models/taskModel";
 
 dotenv.config(); // Load environment variables
 
@@ -53,16 +54,17 @@ const sequelize = new Sequelize(DB_NAME, DB_USER, DB_PASS, {
 let retryCount = 0;
 
 const connectWithRetry = async (): Promise<void> => {
-  try {
-    await sequelize.authenticate();
-    console.log("✅ PostgreSQL is connected via Sequelize.");
-    retryCount = 0; // Reset retry count on success
-  } catch (error) {
-    console.error(`❌ Sequelize connection failed, retrying in ${2 ** retryCount} seconds...`);
-    retryCount++;
-    setTimeout(connectWithRetry, 2000 * retryCount); // Exponential retry
-  }
-};
+    try {
+      await sequelize.authenticate();
+      console.log("✅ PostgreSQL is connected via Sequelize.");
+  
+      await sequelize.sync(); // Sync models with database
+      console.log("✅ Database models synced.");
+    } catch (error) {
+      console.error("❌ Sequelize connection failed:", error);
+      setTimeout(connectWithRetry, 2000);
+    }
+  };
 
 export default connectWithRetry;
 export { sequelize };

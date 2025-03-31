@@ -8,6 +8,8 @@ dotenv.config();
 
 const app = express();
 
+app.use(express.json()); // Enable JSON body parsing
+
 // Define CORS settings
 app.use(cors({
     origin: process.env.CLIENT_URL || 'http://localhost:5173',
