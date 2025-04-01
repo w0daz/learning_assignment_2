@@ -1,9 +1,12 @@
-import { Router } from 'express';
-import { getTasks } from '../controllers/taskController';
+import { Router } from "express";
+import { getTasks, createTask } from "../controllers/taskController"; // Import controllers
 
 const router = Router();
 
-// Define a GET route for fetching tasks
-router.get('/tasks', getTasks);
+router.get("/tasks", getTasks); 
+router.post("/tasks", createTask);
+
+// Adding POST route for creating a new task
+router.post("/tasks", createTask);
 
 export default router;
