@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import Task from "../models/taskModel"; // ✅ Ensure correct model import
+import Task from "../models/taskModel"; // Ensure correct model import
 
 // fetch tasks
 export const getTasks = async (req: Request, res: Response) => {
@@ -22,7 +22,7 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       return;
     }
 
-    // ✅ Create new task
+    // Create new task
     const newTask = await Task.create({
       name,
       content,
@@ -30,7 +30,7 @@ export const createTask = async (req: Request, res: Response): Promise<void> => 
       endDate: endDate || null,
     });
 
-    res.status(201).json(newTask); // ✅ Return created task
+    res.status(201).json(newTask); //  Return created task
   } catch (error) {
     console.error("Error creating task:", error);
     res.status(500).json({ error: "Failed to create task" });

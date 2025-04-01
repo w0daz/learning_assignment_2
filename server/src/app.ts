@@ -1,26 +1,33 @@
-import express from 'express';
-import cors from 'cors';
-import taskRoute from './routes/taskRoute'; // Import taskRoute
-import dotenv from 'dotenv';
+import express from "express";
+import cors from "cors";
+import taskRoute from "./routes/taskRoute"; // Import taskRoute
+import dotenv from "dotenv";
 import connectWithRetry from "./config/db";
 
 dotenv.config();
 
 const app = express();
 
+// Enable CORS with credentials
+app.use(
+    cors({
+        origin: "http://localhost:5173", // Frontend URL
+        credentials: true, // Allow credentials
+    })
+);
+
+app.use((req, res, next) => {
+    res.header("Access-Control-Allow-Credentials", "true");
+    next();
+});
+
 app.use(express.json()); // Enable JSON body parsing
 
-// Define CORS settings
-app.use(cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-}));
-
 // Add routes
-app.use('/api', taskRoute);
+app.use("/api", taskRoute);
 
-// Call the database connection function
+
 connectWithRetry();
 
-// Export the app
+
 export default app;
