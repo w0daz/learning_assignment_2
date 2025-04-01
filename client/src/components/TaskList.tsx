@@ -1,3 +1,5 @@
+import { TaskModel } from "../models/TaskModels"
+
 const TaskList = ({ taskList, onDeleteTask }: { taskList: TaskModel[], onDeleteTask: (taskId: number) => void }) => {
   return (
     <ul className="space-y-2 w-full">
